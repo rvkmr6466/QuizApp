@@ -1,30 +1,59 @@
-<div class="jumbotron">
-    <div class="container">
-        <div class="row">
-            <div class="div col-md-9 offset-md-2">
-                <div class="col-s6">
-                    <h1>Quiz Registration</h1>
+<div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+        <form [formGroup] = "signupForm" (ngSubmit) = "onSubmit()">
+            <div formGroupName = 'userData'>
+                <div class="form-group">
+                    <label for="email">email</label>
+                    <input
+                      type="text"
+                      id="email"
+                      class="form-control"
+                      formControlName = 'email'>
+                      <small 
+                        *ngIf="!signupForm.get('userData.email').valid && signupForm.get('userData.email').touched"
+                        class="help-block">Please provide valid email!</small>
                 </div>
-                <br>
-                <form #registerForm>
-                    <div class="form-group">
-                        <i class="material-icons">account_circle</i>  
-                        <label>Username</label>  
-                        <input type="text" class="form-control" id="validationCustom03" required>
-                        <div class="invalid-feedback">
-                            Please provide a valid city.
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <i class="material-icons">mail_outline</i>
-                        <label for="exampleInputPassword1">
-                            Password
-                        </label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" required #password ngModel>
-                    </div>
-                    <button type="submit" class="btn btn-primary" [disabled]='!registerForm.valid'>Submit</button>
-                </form>
+    
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        class="form-control"
+                        [formControlName] = "'username'">
+                        <small 
+                        *ngIf="signupForm.get('userData.username').invalid && signupForm.get('userData.username').touched"
+                        class="help-block">Please provide valid data!</small>
+                </div>
             </div>
-        </div>
+            
+            <div class="radio" *ngFor="let gender of genders">
+                <label>
+                <input
+                    type="radio"
+                    formControlName = 'gender'
+                    [value]="gender">{{ gender }}
+                </label>
+            </div>
+
+            <div formArrayName="hobbies">
+                <h5>Hobbies</h5>
+                <hr>
+                <button class="btn btn-secondary" type="button" (click)="onAddHobby()">Add Hobby</button>
+                <div class="form-group"
+                    *ngFor="let hobbyControl of signupForm.get('hobbies').controls; let i = index">
+                    <input type="text" class="form-control" [formControlName] = "i">
+                    <span 
+                        *ngIf="!signupForm.get('hobbies').valid && signupForm.get('hobbies').touched"
+                        class="help-block">Please provide valid data!</span>
+                </div>
+            </div>
+            
+            
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+      </div>
     </div>
-</div>
+  </div>
+  
