@@ -1,3 +1,5 @@
+<app-navbar></app-navbar>
+
 <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
@@ -36,24 +38,21 @@
                     [value]="gender">{{ gender }}
                 </label>
             </div>
-
+<hr>
             <div formArrayName="hobbies">
-                <h5>Hobbies</h5>
-                <hr>
+                <label for = "hobbies">Hobbies</label><br>
                 <button class="btn btn-secondary" type="button" (click)="onAddHobby()">Add Hobby</button>
                 <div class="form-group"
-                    *ngFor="let hobbyControl of signupForm.get('hobbies').controls; let i = index">
+                    *ngFor="let hobbyControl of signupForm.get('hobbies')['controls']; let i = index">
                     <input type="text" class="form-control" [formControlName] = "i">
                     <span 
-                        *ngIf="!signupForm.get('hobbies').valid && signupForm.get('hobbies').touched"
+                        *ngIf="signupForm.get('hobbies').invalid && signupForm.get('hobbies').touched"
                         class="help-block">Please provide valid data!</span>
                 </div>
             </div>
             
-            
-            <button class="btn btn-primary" type="submit">Submit</button>
-        </form>
-      </div>
+            <button class="btn btn-primary" type="submit" [disabled] = "signupForm.invalid">Sign Up</button>
+            </form>
+        </div>
     </div>
-  </div>
-  
+</div>

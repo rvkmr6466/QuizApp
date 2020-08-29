@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { QuizService } from '../shared/quiz.service';
 
 @Component({
 	selector: 'app-register',
@@ -12,7 +13,8 @@ export class RegisterComponent implements OnInit {
 	genders = ['male', 'female'];
 	signupForm: FormGroup;
 
-	constructor() { }
+	constructor(private service: QuizService,
+		) { }
 
 	ngOnInit(): void {
 		this.signupForm = new FormGroup({
@@ -34,5 +36,9 @@ export class RegisterComponent implements OnInit {
 		const hobbiesControl = new FormControl(null, Validators.required);
 		(<FormArray>this.signupForm.get('hobbies')).push(hobbiesControl); 
 
+	}
+
+	login(){
+		this.service.login();
 	}
 }
